@@ -1,97 +1,120 @@
 # AnonyProof Protocol
 
-> Privacy-first, decentralized identity verification without exposing sensitive data.
+> Secure, decentralized identity verification using Zero-Knowledge Proofs — no CPF, phone, or address ever exposed.
 
-**AnonyProof** is a Zero-Knowledge Proof (ZKP)-based identity verification protocol designed to empower users to prove who they are — or that they are trustworthy — **without revealing any personal information** such as CPF, phone number, address or email.
-
----
-
-## 🚀 What is AnonyProof?
-
-AnonyProof allows users to validate themselves using cryptographic proofs instead of public or private identifiers. This removes the risk of social engineering, phishing, and data-based extortion.
-
-It enables a safer digital world by combining:
-- ✅ Decentralized identity principles
-- 🔐 Blockchain-based verification
-- 👻 GhostID: a user-friendly app interface
-- 🧠 Future-ready ML and threat detection
+**AnonyProof** is a privacy-first identity verification protocol that allows users to prove they are trustworthy **without revealing any personal information**.  
+Built on **Zero-Knowledge Proofs (ZKPs)** and **blockchain-based trust**, AnonyProof enables a safer and anonymous digital identity.
 
 ---
 
-## 🔧 Tech Stack
+## 🚀 What Problem Does It Solve?
 
-| Layer          | Tech                                            |
-|----------------|-------------------------------------------------|
-| Backend        | Go (or Node.js)                                 |
-| Frontend       | React (QR-based interaction)                    |
-| Blockchain     | zkSync, Polygon, or Ethereum + Semaphore (ZKP) |
-| Smart Contracts| Solidity                                        |
-| Observability  | OpenTelemetry, Grafana, Loki                    |
-| Hosting        | AWS (production) / Railway or Render (MVP)      |
+Millions of people are targeted by scams, extortion, and social engineering daily — all enabled by easy access to personal data.
+
+AnonyProof solves this by:
+- Removing the need to expose personal identifiers (CPF, phone, etc.)
+- Enabling private and verifiable proof of trust
+- Providing a safe way to interact with apps and services
+
+---
+
+## 🧠 Core Technologies
+
+- **Backend**: Go + Fiber
+- **Frontend**: Next.js (React)
+- **ZKP Engine**: Semaphore (zk-SNARKs)
+- **Smart Contracts**: Solidity + Hardhat
+- **Blockchain Layer**: zkSync or Polygon
+- **Wallet Integration**: WalletConnect + QRCode
+- **Observability**: OpenTelemetry, Grafana Cloud, Loki, Tempo
+- **Hosting**:
+  - MVP: Railway
+  - Production: AWS
 
 ---
 
 ## 🧱 Architecture Overview
 
-- **Proof Issuer**: Validates the user once and creates a ZKP token
-- **GhostID App**: Stores and manages the user's proof
-- **Verifier Site**: Requests proof without storing or seeing personal data
-- **Blockchain**: Stores immutable verification events (no PII)
-- **ZKP Engine**: Generates and verifies anonymous identity proofs
+                        ┌────────────────────────────┐
+                        │             End User               │
+                        └────────────┬───────────────┘
+                                         │
+                               Scan QR / Connect Wallet
+                                         │
+                        ┌────────────▼──────────────┐
+                        │          GhostID Frontend         │
+                        │      (Next.js + WalletConnect)    │
+                        └────────────┬──────────────┘
+                                         │
+                               Request proof via API
+                                         │
+                        ┌────────────▼──────────────┐
+                        │           AnonyProof API          │
+                        │            (Go + Fiber)           │
+                        └───────┬──────────┬────────┘
+                                  │              │
+             Generate/Verify ZKP  │              │  Send proof txn
+                                  │              │
+                     ┌─────────▼┐       ┌─ ─▼───────────┐
+                     │  ZKP Engine  │      │   Smart Contracts  │
+                     │  Semaphore   │      │   Solidity + ZK    │
+                     └───────────┘      └─────┬─────────┘
+                                                    │
+                                       Record on-chain ZKP proof
+                                                    │
+                         ┌────────────────────▼──────────────────┐
+                         │           Blockchain Layer (zkSync)              │
+                         └───────────────────────────────────────┘
 
 ---
 
-## 👁️ Observability & Security
+## 🕵️ Key Privacy Features
 
-AnonyProof ships with full observability support:
-- Structured logs
-- Real-time tracing
-- Custom metrics
-- IP/geolocation tracking (for fraud detection)
-- Future AI/ML module for anomaly and behavior scoring
-
----
-
-## 📍 Real-World Problem
-
-> "Anyone can buy your full name, phone number, and address for less than $5. That ends now."
-
-AnonyProof was born out of frustration with how easily malicious actors can access our data — and how few tools we have to stay private and safe.
+- ✅ Zero-Knowledge Proof-based identity validation  
+- 🔒 No personal data exposed or stored  
+- 📍 Fraud detection via IP, DDD, and browser fingerprinting  
+- 👁️ Full system observability (tracing, metrics, logs)  
+- 🧠 Future ML scoring to detect abuse patterns  
 
 ---
 
 ## 👻 GhostID Interface
 
-GhostID is the user-facing wallet built on top of AnonyProof.  
-It allows users to easily scan QR codes and prove their authenticity without revealing any personal info.
-
-> Example flow:  
-> User scans a QR → Proof generated via ZKP → Verifier receives confirmation ✅
+**GhostID** is the user-friendly identity wallet for interacting with AnonyProof.  
+It allows people to validate themselves using QR codes and cryptographic proofs — with zero exposure.
 
 ---
 
-## 📌 Roadmap
+## 📊 Observability & Monitoring
 
-- [x] Define protocol architecture
-- [x] Create project structure and observability stack
-- [ ] Implement ZKP with Semaphore
-- [ ] Connect smart contracts to zkSync testnet
-- [ ] Build QR-based GhostID frontend
-- [ ] Integrate logging, tracing and ML fraud layer
+- Structured logging with contextual metadata  
+- Real-time distributed tracing (OpenTelemetry)  
+- Custom metrics and dashboards (Grafana)  
+- Fraud detection hooks (IP / DDD tracking)  
+
+---
+
+## 🧩 Roadmap
+
+- [x] Define architecture and tech stack  
+- [ ] MVP: Backend API with Go + ZKP validation  
+- [ ] Deploy smart contracts on zkSync testnet  
+- [ ] Build GhostID frontend with QR-based login  
+- [ ] Add full observability (Loki + Tempo)  
+- [ ] Implement ML module for fraud scoring (v2)  
 
 ---
 
 ## 🤝 Contributing
 
-Want to help improve privacy in the digital world?  
-Open a PR, suggest ideas or just reach out.  
-Every bit of help makes the internet a little safer.
+If you care about privacy and a better internet, join us.  
+Open a PR, suggest features, or report an issue.
 
 ---
 
 ## 🛡️ License
 
-This project is licensed under the MIT License.
+MIT License
 
 ---
 
