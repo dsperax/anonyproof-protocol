@@ -110,6 +110,67 @@ It allows people to validate themselves using QR codes and cryptographic proofs 
 If you care about privacy and a better internet, join us.  
 Open a PR, suggest features, or report an issue.
 
+
+## ▶️ Running the Project Locally
+
+### 🧑‍💻 Frontend (GhostID)
+
+1. Open a terminal and navigate to the frontend folder:
+
+   ```bash
+   cd frontend
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Start the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+4. Open your browser at:
+
+   ```
+   http://localhost:3000
+   ```
+
+---
+
+### 🧠 Backend (AnonyProof API)
+
+1. Open a terminal and navigate to the backend folder:
+
+   ```bash
+   cd backend
+   ```
+
+2. Run the application:
+
+   ```bash
+   go run cmd/api/main.go
+   ```
+
+3. Test the API health check:
+
+   ```
+   GET http://localhost:3000/health
+   ```
+
+   Expected response:
+
+   ```json
+   {
+     "status": "ok"
+   }
+   ```
+
+---
+
 ---
 
 ## 🛡️ License
