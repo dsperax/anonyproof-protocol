@@ -1,0 +1,76 @@
+version: "3.9"
+
+services:
+
+  backend:
+    container_name: anonyproof-backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    volumes:
+      - ./backend:/app
+    working_dir: /app
+    command: go run cmd/api/main.go
+    ports:
+      - "3000:3000"
+    depends_on:
+      - zk-node
+    environment:
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317
+
+  frontend:
+    container_name: anonyproof-frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    volumes:
+      - ./frontend:/app
+    working_dir: /app
+    ports:
+      - "3001:3000"
+    command: npm run dev
+
+  zk-node:
+    container_name: anonyproof-hardhat
+    image: node:18
+    working_dir: /app
+    volumes:
+      - ./contracts:/app
+    command: >
+      sh -c "npm install -g hardhat && npx hardhat node"
+    ports:
+      - "8545:8545"
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3002:3000"
+    volumes:
+      - grafana-storage:/var/lib/grafana
+
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib
+    command: ["--config=/etc/otel-collector-config.yaml"]
+    volumes:
+      - ./observability/otel-collector-config.yaml:/etc/otel-collector-config.yaml
+    ports:
+      - "4317:4317" # gRPC OTLP
+      - "4318:4318" # HTTP OTLP
+
+  loki:
+    image: grafana/loki:2.8.2
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+    volumes:
+      - ./observability/loki-config.yaml:/etc/loki/local-config.yaml
+
+  promtail:
+    image: grafana/promtail:2.8.2
+    volumes:
+      - /var/log:/var/log
+      - ./observability/promtail-config.yaml:/etc/promtail/config.yml
+    command: -config.file=/etc/promtail/config.yml
+
+volumes:
+  grafana-storage:

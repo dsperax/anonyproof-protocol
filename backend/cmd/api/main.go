@@ -1,16 +1,17 @@
 package main
 
 import (
-    "log"
+	"log"
 
-    "github.com/gofiber/fiber/v2"
-    "github.com/your/module/internal/adapters/handlers"
+	"anonyproof-protocol/backend/internal/adapters/handlers"
+
+	"github.com/gofiber/fiber/v2"
 )
 
 func main() {
-    app := fiber.New()
+	app := fiber.New()
 
-    app.Get("/health", handlers.HealthCheck)
+	app.Get("/health", handlers.HealthCheck)
 
-    log.Fatal(app.Listen(":3000"))
+	log.Fatal(app.Listen(":3000"))
 }
